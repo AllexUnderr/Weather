@@ -36,6 +36,11 @@ android {
 }
 
 dependencies {
+    def lifecycle_version = "2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'org.osmdroid:osmdroid-android:6.1.14'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'androidx.core:core-ktx:1.9.0'
