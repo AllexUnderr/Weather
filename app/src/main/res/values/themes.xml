@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="WeatherApplication" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/josefin_sans_light</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorPrimaryDark">@color/black</item>
+    </style>
+</resources>
