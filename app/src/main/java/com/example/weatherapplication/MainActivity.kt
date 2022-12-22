@@ -2,13 +2,10 @@ package com.example.weatherapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import androidx.core.app.ActivityCompat
-import androidx.preference.PreferenceFragmentCompat
 import com.example.weatherapplication.databinding.ActivityMainBinding
 import org.osmdroid.config.Configuration.*
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.views.MapView
 import weatherAPI.Weather
 
 class MainActivity : AppCompatActivity() {
@@ -25,13 +22,13 @@ class MainActivity : AppCompatActivity() {
         )
         setContentView(view)
 
-        binding.MapView.setTileSource(TileSourceFactory.MAPNIK)
+        binding.mapView.setTileSource(TileSourceFactory.MAPNIK)
 
         binding.insertButton.setOnClickListener {
             val latitude = binding.latitudeEditText.text.toString().toDouble()
             val longitude = binding.longitudeEditText.text.toString().toDouble()
 
-            if (latitude <= 90.0 && latitude >= -90.0 && longitude <= 180.0 && longitude >= -180) {
+            if (latitude in -90.0..90.0 && longitude in -180.0..180.0) {
                 Weather().getWeather(latitude, longitude) {
                     binding.temperatureTextView.text =
                         getString(R.string.temperature, it.main.temp.toString())
@@ -45,12 +42,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        binding.MapView.onResume()
+        binding.mapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        binding.MapView.onPause()
+        binding.mapView.onPause()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

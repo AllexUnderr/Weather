@@ -7,6 +7,6 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="android:textColorLink">@color/black</item>
-        <item name="editTextStyle">@style/customEditText</item>
+        <item name="editTextStyle">@style/CustomEditText</item>
     </style>
 </resources>
