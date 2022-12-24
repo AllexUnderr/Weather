@@ -17,46 +17,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/temperatureTextView"
+        android:id="@+id/objectNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/insert_coordinates"
+        android:text="@string/object_name_text"
         app:layout_constraintEnd_toEndOf="@id/applicationTitleTextView"
         app:layout_constraintStart_toStartOf="@id/applicationTitleTextView"
         app:layout_constraintTop_toBottomOf="@id/applicationTitleTextView" />
 
     <EditText
-        android:id="@+id/latitudeEditText"
+        android:id="@+id/objectNameEditText"
         style="@style/CustomEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints="no"
         android:backgroundTint="@color/black"
         android:padding="10dp"
-        android:hint="@string/latitude"
-        android:inputType="numberDecimal|numberSigned"
+        android:hint="@string/city_example"
+        android:inputType="text"
         android:textAlignment="center"
         android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="@id/temperatureTextView"
-        app:layout_constraintStart_toStartOf="@id/temperatureTextView"
-        app:layout_constraintTop_toBottomOf="@id/temperatureTextView"
-        tools:ignore="LabelFor" />
-
-    <EditText
-        android:id="@+id/longitudeEditText"
-        style="@style/CustomEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints="no"
-        android:backgroundTint="@color/black"
-        android:padding="10dp"
-        android:hint="@string/longitude"
-        android:inputType="numberDecimal|numberSigned"
-        android:textAlignment="center"
-        android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="@id/latitudeEditText"
-        app:layout_constraintStart_toStartOf="@id/latitudeEditText"
-        app:layout_constraintTop_toBottomOf="@id/latitudeEditText"
+        app:layout_constraintEnd_toEndOf="@id/objectNameTextView"
+        app:layout_constraintStart_toStartOf="@id/objectNameTextView"
+        app:layout_constraintTop_toBottomOf="@id/objectNameTextView"
         tools:ignore="LabelFor" />
 
     <Button
@@ -66,18 +49,36 @@
         android:backgroundTint="@color/button_background_color"
         android:text="@string/button_insert"
         android:textColor="@color/button_text_color"
-        app:layout_constraintEnd_toEndOf="@id/longitudeEditText"
-        app:layout_constraintStart_toStartOf="@id/longitudeEditText"
-        app:layout_constraintTop_toBottomOf="@id/longitudeEditText"
+        app:layout_constraintEnd_toEndOf="@id/objectNameEditText"
+        app:layout_constraintStart_toStartOf="@id/objectNameEditText"
+        app:layout_constraintTop_toBottomOf="@id/objectNameEditText"
         app:strokeColor="@color/black"
         app:strokeWidth="1dp" />
+
+    <TextView
+        android:id="@+id/latitudeTextView"
+        android:text="@string/latitude"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/insertButton"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/longitudeTextView"
+        android:text="@string/longitude"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/latitudeTextView"
+        android:layout_height="wrap_content"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="450dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/insertButton"
+        app:layout_constraintTop_toBottomOf="@id/longitudeTextView"
         android:id="@+id/map"
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />

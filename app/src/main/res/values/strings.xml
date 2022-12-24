@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">Weather Application</string>
     <string name="weather">Weather</string>
-    <string name="temperature">Your temperature is %s°C</string>
-    <string name="latitude">latitude</string>
-    <string name="longitude">longitude</string>
+    <string name="temperature">Temperature is %s°C</string>
+    <string name="latitude_template">Latitude: %f</string>
+    <string name="longitude_template">Longitude: %f</string>
+    <string name="latitude">Latitude: </string>
+    <string name="longitude">Longitude: </string>
     <string name="button_insert">insert</string>
     <string name="coordinates_error">Incorrect coordinates</string>
-    <string name="insert_coordinates">Insert coordinates:</string>
+    <string name="object_name_text">Insert object name: </string>
+    <string name="city_example">London</string>
+    <string name="object_name_error">Incorrect object name!</string>
+    <string name="object_coordinates_error">Incorrect coordinates!</string>
 </resources>
