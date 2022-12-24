@@ -27,11 +27,12 @@
 
     <EditText
         android:id="@+id/latitudeEditText"
+        style="@style/CustomEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints="no"
         android:backgroundTint="@color/black"
-        android:ems="6"
+        android:padding="10dp"
         android:hint="@string/latitude"
         android:inputType="numberDecimal|numberSigned"
         android:textAlignment="center"
@@ -43,11 +44,12 @@
 
     <EditText
         android:id="@+id/longitudeEditText"
+        style="@style/CustomEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints="no"
         android:backgroundTint="@color/black"
-        android:ems="6"
+        android:padding="10dp"
         android:hint="@string/longitude"
         android:inputType="numberDecimal|numberSigned"
         android:textAlignment="center"
@@ -70,13 +72,14 @@
         app:strokeColor="@color/black"
         app:strokeWidth="1dp" />
 
-    <org.osmdroid.views.MapView
-        android:id="@+id/mapView"
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
-        android:layout_height="447dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="450dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/insertButton" />
+        app:layout_constraintTop_toBottomOf="@id/insertButton"
+        android:id="@+id/map"
+        tools:context=".MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

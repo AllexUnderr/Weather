@@ -1,68 +1,64 @@
 package com.example.weatherapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapplication.databinding.ActivityMainBinding
-import org.osmdroid.config.Configuration.*
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import weatherAPI.Weather
 
-class MainActivity : AppCompatActivity() {
-    private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
+class MainActivity : AppCompatActivity(), OnMapReadyCallback {
+    private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
-        getInstance().load(
-            this,
-            androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
-        )
         setContentView(view)
 
-        binding.mapView.setTileSource(TileSourceFactory.MAPNIK)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         binding.insertButton.setOnClickListener {
-            val latitude = binding.latitudeEditText.text.toString().toDouble()
-            val longitude = binding.longitudeEditText.text.toString().toDouble()
+            val latitude = binding.latitudeEditText.text.toString().toDoubleOrNull()
+            val longitude = binding.longitudeEditText.text.toString().toDoubleOrNull()
+
+            if (latitude == null || longitude == null)
+                return@setOnClickListener
 
             if (latitude in -90.0..90.0 && longitude in -180.0..180.0) {
-                Weather().getWeather(latitude, longitude) {
-                    binding.temperatureTextView.text =
-                        getString(R.string.temperature, it.main.temp.toString())
-                }
+                setTemperature(latitude, longitude)
+                map.clear()
+                val coordinates = LatLng(latitude, longitude)
+                map.addMarker(MarkerOptions().position(coordinates))
+                map.moveCamera(CameraUpdateFactory.newLatLng(coordinates))
             } else {
                 binding.temperatureTextView.text = getString(R.string.coordinates_error)
             }
         }
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
 
-    override fun onResume() {
-        super.onResume()
-        binding.mapView.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding.mapView.onPause()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        val permissionsToRequest = ArrayList<String>()
-        var i = 0
-        while (i < grantResults.size) {
-            permissionsToRequest.add(permissions[i])
-            i++
+        map.setOnMapClickListener {
+            map.clear()
+            map.addMarker(MarkerOptions().position(it))
+            setTemperature(it.latitude, it.longitude)
+            binding.latitudeEditText.setText(it.latitude.toString())
+            binding.longitudeEditText.setText(it.longitude.toString())
         }
-        if (permissionsToRequest.size > 0) {
-            ActivityCompat.requestPermissions(
-                this,
-                permissionsToRequest.toTypedArray(),
-                REQUEST_PERMISSIONS_REQUEST_CODE)
+    }
+
+    private fun setTemperature(latitude: Double, longitude: Double) {
+        Weather().getWeather(latitude, longitude) {
+            binding.temperatureTextView.text =
+                getString(R.string.temperature, it.main.temp.toString())
         }
     }
 }
