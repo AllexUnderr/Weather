@@ -2,4 +2,9 @@
     <string name="app_name">Weather Application</string>
     <string name="weather">Weather</string>
     <string name="temperature">Your temperature is %s°C</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+    <string name="button_insert">insert</string>
+    <string name="coordinates_error">Incorrect coordinates</string>
+    <string name="insert_coordinates">Insert coordinates:</string>
 </resources>
