@@ -9,6 +9,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import geocoding.AndroidGeocoder
+import geocoding.WeatherGeocoder
 import weatherAPI.Weather
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -25,28 +27,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         binding.insertButton.setOnClickListener {
-            val nameObject = binding.objectNameEditText.text.toString()
+            val locationName = binding.objectNameEditText.text.toString()
 
-            if (nameObject.isBlank())
+            if (locationName.isBlank())
                 return@setOnClickListener
 
-            Weather().geocoding(nameObject) { geocoding ->
-                if (geocoding.isEmpty()) {
-                    binding.objectNameTextView.text = getString(R.string.object_name_error)
-                    binding.applicationTitleTextView.text = getString(R.string.app_name)
-                } else {
-                    val (name, latitude, longitude) = geocoding.first()
-
-                    Weather().getWeather(latitude, longitude) {
-                        binding.objectNameTextView.text =
-                            getString(R.string.temperature, it.main.temp.toString())
-                    }
-                    binding.applicationTitleTextView.text = name
-
-                    setCoordinates(latitude, longitude)
-                    setMarker(LatLng(latitude, longitude))
-                }
-            }
+            if (binding.geocodeSwitch.isChecked)
+                directGeocode(locationName, AndroidGeocoder(this))
+            else
+                directGeocode(locationName, WeatherGeocoder())
         }
     }
 
@@ -60,16 +49,43 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             setCoordinates(latitude, longitude)
             setMarker(marker)
 
-            Weather().getObjectName(latitude, longitude) {
-                if (it.isEmpty()) {
-                    binding.objectNameTextView.text = getString(R.string.object_coordinates_error)
-                    binding.applicationTitleTextView.text = getString(R.string.app_name)
-                } else {
-                    binding.applicationTitleTextView.text = it.first().name
-                    Weather().getWeather(latitude, longitude) { weatherData ->
-                        binding.objectNameTextView.text =
-                            getString(R.string.temperature, weatherData.main.temp.toString())
-                    }
+            if (binding.geocodeSwitch.isChecked)
+                reverseGeocode(latitude, longitude, AndroidGeocoder(this))
+            else
+                reverseGeocode(latitude, longitude, WeatherGeocoder())
+        }
+    }
+
+    private fun directGeocode(locationName: String, geocoder: geocoding.Geocoder) {
+        geocoder.directGeocode(locationName) { geocoding ->
+            if (geocoding.isEmpty()) {
+                binding.objectNameTextView.text = getString(R.string.object_name_error)
+                binding.applicationTitleTextView.text = getString(R.string.app_name)
+            } else {
+                val (latitude, longitude) = geocoding.first()
+
+                Weather().getWeather(latitude, longitude) {
+                    binding.objectNameTextView.text =
+                        getString(R.string.temperature, it.main.temp.toString())
+                }
+                binding.applicationTitleTextView.text = locationName
+
+                setCoordinates(latitude, longitude)
+                setMarker(LatLng(latitude, longitude))
+            }
+        }
+    }
+
+    private fun reverseGeocode(latitude: Double, longitude: Double, geocoder: geocoding.Geocoder) {
+        geocoder.reverseGeocode(latitude, longitude) {
+            if (it.isEmpty()) {
+                binding.objectNameTextView.text = getString(R.string.object_coordinates_error)
+                binding.applicationTitleTextView.text = getString(R.string.app_name)
+            } else {
+                binding.applicationTitleTextView.text = it.first().name
+                Weather().getWeather(latitude, longitude) { weatherData ->
+                    binding.objectNameTextView.text =
+                        getString(R.string.temperature, weatherData.main.temp.toString())
                 }
             }
         }

@@ -28,36 +28,4 @@ class Weather {
             }
         })
     }
-
-    fun geocoding(objectName: String, success: (List<Geocoding>) -> Unit) {
-        val call = service.getWeatherByObject(objectName, API_KEY)
-        call.enqueue(object : Callback<List<Geocoding>> {
-            override fun onResponse(
-                call: Call<List<Geocoding>>,
-                response: Response<List<Geocoding>>
-            ) {
-                success(requireNotNull(response.body()))
-            }
-
-            override fun onFailure(call: Call<List<Geocoding>>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
-    }
-
-    fun getObjectName(lat: Double, lon: Double, success: (List<ObjectName>) -> Unit) {
-        val call = service.getObjectName(lat, lon, API_KEY)
-        call.enqueue(object : Callback<List<ObjectName>> {
-            override fun onResponse(
-                call: Call<List<ObjectName>>,
-                response: Response<List<ObjectName>>
-            ) {
-                success(requireNotNull(response.body()))
-            }
-
-            override fun onFailure(call: Call<List<ObjectName>>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
-    }
 }

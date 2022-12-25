@@ -7,9 +7,9 @@
     <string name="latitude">Latitude: </string>
     <string name="longitude">Longitude: </string>
     <string name="button_insert">insert</string>
-    <string name="coordinates_error">Incorrect coordinates</string>
     <string name="object_name_text">Insert object name: </string>
     <string name="city_example">London</string>
     <string name="object_name_error">Incorrect object name!</string>
     <string name="object_coordinates_error">Incorrect coordinates!</string>
+    <string name="geocode_variant">Geocode variant</string>
 </resources>

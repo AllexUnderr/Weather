@@ -12,17 +12,4 @@ interface WeatherAPI {
         @Query("units") unit: String,
         @Query("appid") APIKey: String,
     ): Call<WeatherData>
-
-    @GET("geo/1.0/direct")
-    fun getWeatherByObject(
-        @Query("q") objectName: String,
-        @Query("appid") APIKey: String,
-    ): Call<List<Geocoding>>
-
-    @GET("geo/1.0/reverse")
-    fun getObjectName(
-        @Query("lat") lat: Double,
-        @Query("lon") lon: Double,
-        @Query("appid") APIKey: String,
-    ): Call<List<ObjectName>>
 }

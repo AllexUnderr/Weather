@@ -32,9 +32,9 @@
         android:layout_height="wrap_content"
         android:autofillHints="no"
         android:backgroundTint="@color/black"
-        android:padding="10dp"
         android:hint="@string/city_example"
         android:inputType="text"
+        android:padding="10dp"
         android:textAlignment="center"
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="@id/objectNameTextView"
@@ -57,30 +57,41 @@
 
     <TextView
         android:id="@+id/latitudeTextView"
-        android:text="@string/latitude"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:text="@string/latitude"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/insertButton"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/insertButton" />
 
     <TextView
         android:id="@+id/longitudeTextView"
-        android:text="@string/longitude"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:text="@string/longitude"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/latitudeTextView"
+        app:layout_constraintTop_toBottomOf="@id/latitudeTextView" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:text="@string/geocode_variant"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/longitudeTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/geocodeSwitch"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/longitudeTextView"
-        android:id="@+id/map"
+        app:layout_constraintTop_toBottomOf="@id/geocodeSwitch"
         tools:context=".MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        tools:layout="@layout/activity_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
