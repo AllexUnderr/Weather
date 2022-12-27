@@ -2,6 +2,7 @@ package com.example.weatherapplication
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.weatherapplication.api.RetrofitBuilder
 import com.example.weatherapplication.databinding.ActivityMainBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -9,9 +10,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import geocoding.AndroidGeocoder
-import geocoding.WeatherGeocoder
-import weatherAPI.Weather
+import com.example.weatherapplication.api.geocoding.AndroidGeocoder
+import com.example.weatherapplication.api.geocoding.Geocoder
+import com.example.weatherapplication.api.geocoding.WeatherGeocoder
+import com.example.weatherapplication.api.weatherAPI.Weather
+import retrofit2.create
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
@@ -35,7 +38,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             if (binding.geocodeSwitch.isChecked)
                 directGeocode(locationName, AndroidGeocoder(this))
             else
-                directGeocode(locationName, WeatherGeocoder())
+                directGeocode(locationName, WeatherGeocoder(RetrofitBuilder.retrofit.create()))
         }
     }
 
@@ -52,41 +55,49 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             if (binding.geocodeSwitch.isChecked)
                 reverseGeocode(latitude, longitude, AndroidGeocoder(this))
             else
-                reverseGeocode(latitude, longitude, WeatherGeocoder())
+                reverseGeocode(
+                    latitude,
+                    longitude,
+                    WeatherGeocoder(RetrofitBuilder.retrofit.create())
+                )
         }
     }
 
-    private fun directGeocode(locationName: String, geocoder: geocoding.Geocoder) {
-        geocoder.directGeocode(locationName) { geocoding ->
-            if (geocoding.isEmpty()) {
+    private fun directGeocode(locationName: String, geocoder: Geocoder) {
+        geocoder.directGeocode(locationName) geocode@{ geocoding ->
+            if (geocoding == null) {
                 binding.objectNameTextView.text = getString(R.string.object_name_error)
                 binding.applicationTitleTextView.text = getString(R.string.app_name)
-            } else {
-                val (latitude, longitude) = geocoding.first()
-
-                Weather().getWeather(latitude, longitude) {
-                    binding.objectNameTextView.text =
-                        getString(R.string.temperature, it.main.temp.toString())
-                }
-                binding.applicationTitleTextView.text = locationName
-
-                setCoordinates(latitude, longitude)
-                setMarker(LatLng(latitude, longitude))
+                return@geocode
             }
+
+            val (latitude, longitude) = geocoding
+            Weather(RetrofitBuilder.retrofit.create()).getWeather(latitude, longitude) {
+                binding.objectNameTextView.text =
+                    getString(R.string.temperature, it.main.temperature.toString())
+            }
+            binding.applicationTitleTextView.text = locationName
+
+            setCoordinates(latitude, longitude)
+            setMarker(LatLng(latitude, longitude))
         }
     }
 
-    private fun reverseGeocode(latitude: Double, longitude: Double, geocoder: geocoding.Geocoder) {
-        geocoder.reverseGeocode(latitude, longitude) {
-            if (it.isEmpty()) {
+    private fun reverseGeocode(latitude: Double, longitude: Double, geocoder: Geocoder) {
+        geocoder.reverseGeocode(latitude, longitude) geocode@{
+            if (it == null) {
                 binding.objectNameTextView.text = getString(R.string.object_coordinates_error)
                 binding.applicationTitleTextView.text = getString(R.string.app_name)
-            } else {
-                binding.applicationTitleTextView.text = it.first().name
-                Weather().getWeather(latitude, longitude) { weatherData ->
-                    binding.objectNameTextView.text =
-                        getString(R.string.temperature, weatherData.main.temp.toString())
-                }
+                return@geocode
+            }
+
+            binding.applicationTitleTextView.text = it.name
+            Weather(RetrofitBuilder.retrofit.create()).getWeather(
+                latitude,
+                longitude
+            ) { weatherData ->
+                binding.objectNameTextView.text =
+                    getString(R.string.temperature, weatherData.main.temperature.toString())
             }
         }
     }
