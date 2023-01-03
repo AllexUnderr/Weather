@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".WeatherActivity">
 
     <TextView
-        android:id="@+id/applicationTitleTextView"
+        android:id="@+id/cityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/weather"
+        android:text="@string/object_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,9 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/object_name_text"
-        app:layout_constraintEnd_toEndOf="@id/applicationTitleTextView"
-        app:layout_constraintStart_toStartOf="@id/applicationTitleTextView"
-        app:layout_constraintTop_toBottomOf="@id/applicationTitleTextView" />
+        app:layout_constraintEnd_toEndOf="@id/cityTextView"
+        app:layout_constraintStart_toStartOf="@id/cityTextView"
+        app:layout_constraintTop_toBottomOf="@id/cityTextView" />
 
     <EditText
         android:id="@+id/objectNameEditText"
@@ -74,14 +74,13 @@
         app:layout_constraintTop_toBottomOf="@id/latitudeTextView" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:text="@string/geocode_variant"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/longitudeTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/geocodeSwitch"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/geocode_variant"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/longitudeTextView" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
@@ -92,6 +91,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/geocodeSwitch"
         tools:context=".MapsActivity"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/support_simple_spinner_dropdown_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
