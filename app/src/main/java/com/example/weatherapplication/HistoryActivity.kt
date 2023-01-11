@@ -4,18 +4,27 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.weatherapplication.databinding.ActivityHistoryBinding
-import com.example.weatherapplication.model.history.HistoryRecyclerAdapter
 import com.example.weatherapplication.model.history.History
+import com.example.weatherapplication.model.history.file.HistoryRecyclerAdapter
+import com.example.weatherapplication.model.history.file.HistoryFile
 import com.example.weatherapplication.model.history.HistoryRecord
+import com.example.weatherapplication.model.history.room.AppDatabase
 
 class HistoryActivity : AppCompatActivity() {
+    private val STORAGE = "storage"
+
     private lateinit var binding: ActivityHistoryBinding
     private lateinit var history: History
 
     private val onDelete: (HistoryRecyclerAdapter, HistoryRecord) -> Unit = { adapter, record ->
         binding.root.post {
-            history.removeRecord(record)
-            adapter.submitList(history.getRecords())
+            Thread {
+                history.removeRecord(record)
+                val records = history.getRecords()
+                runOnUiThread {
+                    adapter.submitList(records)
+                }
+            }.start()
         }
     }
 
@@ -29,10 +38,19 @@ class HistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
-        history = History(this)
-        val records = history.getRecords()
-        val historyAdapter = HistoryRecyclerAdapter(onDelete, onSee)
-        historyAdapter.submitList(records)
-        binding.historyRecyclerView.adapter = historyAdapter
+        history =
+            if (intent.getBooleanExtra(STORAGE, false))
+                HistoryFile(this)
+            else
+                AppDatabase.getInstance(this).getHistoryDao()
+
+        Thread {
+            val records = history.getRecords()
+            val historyAdapter = HistoryRecyclerAdapter(onDelete, onSee)
+            runOnUiThread {
+                historyAdapter.submitList(records)
+                binding.historyRecyclerView.adapter = historyAdapter
+            }
+        }.start()
     }
 }
