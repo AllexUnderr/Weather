@@ -17,9 +17,13 @@ import com.example.weatherapplication.api.weatherAPI.Weather
 import com.example.weatherapplication.databinding.ActivityWeatherBinding
 import com.example.weatherapplication.model.history.History
 import com.example.weatherapplication.model.history.HistoryRecord
+import com.example.weatherapplication.model.history.file.HistoryFile
+import com.example.weatherapplication.model.history.room.AppDatabase
 import retrofit2.create
 
 class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
+    private val STORAGE = "storage"
+
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var history: History
@@ -33,7 +37,12 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        history = History(this)
+        history =
+            if (intent.getBooleanExtra(STORAGE, false))
+                HistoryFile(this)
+            else
+                AppDatabase.getInstance(this).getHistoryDao()
+
         androidGeocoder = AndroidGeocoder(this)
 
         binding.insertButton.setOnClickListener {
@@ -94,7 +103,15 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
             setCoordinates(latitude, longitude)
             setMarker(LatLng(latitude, longitude))
 
-            history.addRecord(HistoryRecord(locationName, latitude, longitude))
+            Thread {
+                history.addRecord(
+                    HistoryRecord(
+                        locationName = locationName,
+                        latitude = latitude,
+                        longitude = longitude
+                    )
+                )
+            }.start()
         }
     }
 
@@ -111,7 +128,15 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             setCity(locationName)
 
-            history.addRecord(HistoryRecord(locationName, latitude, longitude))
+            Thread {
+                history.addRecord(
+                    HistoryRecord(
+                        locationName = locationName,
+                        latitude = latitude,
+                        longitude = longitude
+                    )
+                )
+            }.start()
         }
     }
 
