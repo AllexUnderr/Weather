@@ -1,11 +1,13 @@
-package com.example.weatherapplication.api.geocoding
+package com.example.weatherapplication.geocoding
 
-import com.example.weatherapplication.api.RetrofitBuilder
+import com.example.weatherapplication.service.RetrofitBuilder
+import com.example.weatherapplication.geocoding.model.Coordinates
+import com.example.weatherapplication.geocoding.model.Location
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface GeocoderAPI {
+interface GeocoderApi {
     @GET("geo/1.0/direct")
     fun directGeocode(
         @Query("q") objectName: String,

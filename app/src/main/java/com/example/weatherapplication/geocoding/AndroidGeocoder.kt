@@ -1,15 +1,15 @@
-package com.example.weatherapplication.api.geocoding
+package com.example.weatherapplication.geocoding
 
 import android.content.Context
 import android.location.Address
 import android.os.Build
+import com.example.weatherapplication.geocoding.model.Coordinates
+import com.example.weatherapplication.geocoding.model.Location
 
 class AndroidGeocoder(context: Context) : Geocoder {
     private var geocoder = android.location.Geocoder(context)
 
-    override fun directGeocode(
-        locationName: String, success: (Coordinates?) -> Unit
-    ) {
+    override fun directGeocode(locationName: String, success: (Coordinates?) -> Unit) {
         if (isDeprecatedVersion()) {
             @Suppress("DEPRECATION")
             val addresses = geocoder.getFromLocationName(locationName, 1)
@@ -21,13 +21,10 @@ class AndroidGeocoder(context: Context) : Geocoder {
         }
     }
 
-    override fun reverseGeocode(
-        latitude: Double, longitude: Double, success: (Location?) -> Unit
-    ) {
+    override fun reverseGeocode(latitude: Double, longitude: Double, success: (Location?) -> Unit) {
         if (isDeprecatedVersion()) {
             @Suppress("DEPRECATION")
-            val addresses =
-                geocoder.getFromLocation(latitude, longitude, 1)
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             callReverse(addresses, success)
         } else {
             geocoder.getFromLocation(latitude, longitude, 1) {

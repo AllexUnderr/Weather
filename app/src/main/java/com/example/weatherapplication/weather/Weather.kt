@@ -1,8 +1,9 @@
-package com.example.weatherapplication.api.weatherAPI
+package com.example.weatherapplication.weather
 
+import com.example.weatherapplication.weather.model.WeatherData
 import retrofit2.*
 
-class Weather(private val service: WeatherAPI) {
+class Weather(private val service: WeatherApi) {
     fun getWeather(lat: Double, lon: Double, success: (WeatherData) -> Unit) {
         val call = service.getWeatherByCoordinates(lat, lon)
         call.enqueue(object : Callback<WeatherData> {

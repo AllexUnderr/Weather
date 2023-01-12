@@ -1,10 +1,10 @@
-package com.example.weatherapplication.model.history.room
+package com.example.weatherapplication.history.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.weatherapplication.model.history.HistoryRecord
+import com.example.weatherapplication.history.HistoryRecord
 
 @Database(
     version = 1,

@@ -1,4 +1,4 @@
-package com.example.weatherapplication.model.history
+package com.example.weatherapplication.history
 
 interface History {
     fun addRecord(record: HistoryRecord)

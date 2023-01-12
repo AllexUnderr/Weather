@@ -1,12 +1,12 @@
-package com.example.weatherapplication.model.history.room
+package com.example.weatherapplication.history.room
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.weatherapplication.model.history.History
-import com.example.weatherapplication.model.history.HistoryRecord
+import com.example.weatherapplication.history.History
+import com.example.weatherapplication.history.HistoryRecord
 
 @Dao
 interface HistoryDao : History {
