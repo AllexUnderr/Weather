@@ -1,4 +1,4 @@
-package com.example.weatherapplication.history.file
+package com.example.weatherapplication.history
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.weatherapplication.history.HistoryRecord

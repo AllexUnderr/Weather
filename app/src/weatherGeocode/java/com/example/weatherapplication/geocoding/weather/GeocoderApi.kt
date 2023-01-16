@@ -1,4 +1,4 @@
-package com.example.weatherapplication.geocoding
+package com.example.weatherapplication.geocoding.weather
 
 import com.example.weatherapplication.service.RetrofitBuilder
 import com.example.weatherapplication.geocoding.model.Coordinates

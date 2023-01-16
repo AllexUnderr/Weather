@@ -1,8 +1,9 @@
-package com.example.weatherapplication.geocoding
+package com.example.weatherapplication.geocoding.android
 
 import android.content.Context
 import android.location.Address
 import android.os.Build
+import com.example.weatherapplication.geocoding.Geocoder
 import com.example.weatherapplication.geocoding.model.Coordinates
 import com.example.weatherapplication.geocoding.model.Location
 

@@ -1,4 +1,4 @@
-package com.example.weatherapplication.history.file
+package com.example.weatherapplication.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapplication.databinding.RecyclerviewItemBinding
-import com.example.weatherapplication.history.HistoryRecord
 
 class HistoryRecyclerAdapter(
     private val onDelete: (HistoryRecyclerAdapter, HistoryRecord) -> Unit,

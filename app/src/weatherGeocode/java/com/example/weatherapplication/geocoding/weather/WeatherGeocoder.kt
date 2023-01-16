@@ -1,5 +1,6 @@
-package com.example.weatherapplication.geocoding
+package com.example.weatherapplication.geocoding.weather
 
+import com.example.weatherapplication.geocoding.Geocoder
 import com.example.weatherapplication.geocoding.model.Coordinates
 import com.example.weatherapplication.geocoding.model.Location
 import retrofit2.*

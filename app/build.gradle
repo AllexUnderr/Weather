@@ -26,6 +26,27 @@ android {
         }
     }
 
+    flavorDimensions "geocode", "storage"
+    productFlavors {
+        androidGeocode {
+            dimension "geocode"
+            applicationIdSuffix ".geocoding.android"
+        }
+        weatherGeocode {
+            dimension "geocode"
+            applicationIdSuffix ".geocoding.weather"
+        }
+
+        fileStorage {
+            dimension "storage"
+            applicationIdSuffix ".history.file"
+        }
+        roomStorage {
+            dimension "storage"
+            applicationIdSuffix ".history.room"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

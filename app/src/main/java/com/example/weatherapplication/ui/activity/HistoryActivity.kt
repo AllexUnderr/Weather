@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.weatherapplication.databinding.ActivityHistoryBinding
 import com.example.weatherapplication.history.History
-import com.example.weatherapplication.history.file.HistoryRecyclerAdapter
+import com.example.weatherapplication.history.HistoryRecyclerAdapter
 import com.example.weatherapplication.history.file.HistoryFile
 import com.example.weatherapplication.history.HistoryRecord
 import com.example.weatherapplication.history.room.AppDatabase

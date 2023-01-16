@@ -13,9 +13,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.weatherapplication.geocoding.AndroidGeocoder
+import com.example.weatherapplication.geocoding.android.AndroidGeocoder
 import com.example.weatherapplication.geocoding.Geocoder
-import com.example.weatherapplication.geocoding.WeatherGeocoder
+import com.example.weatherapplication.geocoding.weather.WeatherGeocoder
 import com.example.weatherapplication.weather.Weather
 import com.example.weatherapplication.databinding.ActivityWeatherBinding
 import com.example.weatherapplication.history.History
