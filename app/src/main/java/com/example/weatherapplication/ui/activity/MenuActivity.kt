@@ -1,5 +1,6 @@
 package com.example.weatherapplication.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.weatherapplication.databinding.ActivityMenuBinding
@@ -12,12 +13,12 @@ class MenuActivity : AppCompatActivity() {
         binding = ActivityMenuBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
         binding.weatherButton.setOnClickListener {
-            val intent = WeatherActivity.createIntent(this, shouldUseFileStorage = binding.storageSwitch.isChecked)
+            val intent = Intent(this, WeatherActivity::class.java)
             startActivity(intent)
         }
 
         binding.historyButton.setOnClickListener {
-            val intent = HistoryActivity.createIntent(this, shouldUseFileStorage = binding.storageSwitch.isChecked)
+            val intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
         }
     }
