@@ -1,7 +1,6 @@
-package com.example.weatherapplication.model.history.file
+package com.example.weatherapplication.history
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.weatherapplication.model.history.HistoryRecord
 
 class HistoryItemCallback : DiffUtil.ItemCallback<HistoryRecord>() {
     override fun areItemsTheSame(oldItem: HistoryRecord, newItem: HistoryRecord) =

@@ -1,4 +1,7 @@
-package com.example.weatherapplication.api.geocoding
+package com.example.weatherapplication.geocoding
+
+import com.example.weatherapplication.geocoding.model.Coordinates
+import com.example.weatherapplication.geocoding.model.Location
 
 interface Geocoder {
     fun directGeocode(locationName: String, success: (Coordinates?) -> Unit)

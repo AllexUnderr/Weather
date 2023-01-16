@@ -1,4 +1,4 @@
-package com.example.weatherapplication.api.geocoding
+package com.example.weatherapplication.geocoding.model
 
 import com.google.gson.annotations.SerializedName
 

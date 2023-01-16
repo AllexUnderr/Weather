@@ -26,6 +26,24 @@ android {
         }
     }
 
+
+    flavorDimensions "geocode", "storage"
+    productFlavors {
+        androidGeocode {
+            dimension "geocode"
+        }
+        weatherGeocode {
+            dimension "geocode"
+        }
+
+        fileStorage {
+            dimension "storage"
+        }
+        roomStorage {
+            dimension "storage"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

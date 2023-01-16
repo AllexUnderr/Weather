@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WeatherActivity">
+    tools:context=".ui.activity.WeatherActivity">
 
     <TextView
         android:id="@+id/cityTextView"
@@ -73,23 +73,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/latitudeTextView" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/geocodeSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/geocode_variant"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/longitudeTextView" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/geocodeSwitch"
+        app:layout_constraintTop_toBottomOf="@id/longitudeTextView"
         tools:context=".MapsActivity"
         tools:layout="@layout/support_simple_spinner_dropdown_item" />
 

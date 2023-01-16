@@ -1,11 +1,12 @@
-package com.example.weatherapplication.api.weatherAPI
+package com.example.weatherapplication.weather
 
-import com.example.weatherapplication.api.RetrofitBuilder
+import com.example.weatherapplication.service.RetrofitBuilder
+import com.example.weatherapplication.weather.model.WeatherData
 import retrofit2.http.GET
 import retrofit2.Call
 import retrofit2.http.Query
 
-interface WeatherAPI {
+interface WeatherApi {
     @GET("data/2.5/weather")
     fun getWeatherByCoordinates(
         @Query("lat") lat: Double,

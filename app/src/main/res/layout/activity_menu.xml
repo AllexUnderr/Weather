@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivity">
+    tools:context=".ui.activity.MenuActivity">
 
     <TextView
         android:id="@+id/appNameTextView"
@@ -41,15 +41,5 @@
         app:layout_constraintTop_toBottomOf="@id/weatherButton"
         app:strokeColor="@color/black"
         app:strokeWidth="1dp" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/storageSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/switch_storage"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/historyButton"
-        app:layout_constraintEnd_toEndOf="@id/historyButton"
-        app:layout_constraintTop_toBottomOf="@id/historyButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

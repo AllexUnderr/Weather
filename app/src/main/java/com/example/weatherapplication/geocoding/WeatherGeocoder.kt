@@ -1,18 +1,14 @@
-package com.example.weatherapplication.api.geocoding
+package com.example.weatherapplication.geocoding
 
+import com.example.weatherapplication.geocoding.model.Coordinates
+import com.example.weatherapplication.geocoding.model.Location
 import retrofit2.*
 
-class WeatherGeocoder(private val service: GeocoderAPI) : Geocoder {
-    override fun directGeocode(
-        locationName: String,
-        success: (Coordinates?) -> Unit
-    ) {
+class WeatherGeocoder(private val service: GeocoderApi) : Geocoder {
+    override fun directGeocode(locationName: String, success: (Coordinates?) -> Unit) {
         val call = service.directGeocode(locationName)
         call.enqueue(object : Callback<List<Coordinates>> {
-            override fun onResponse(
-                call: Call<List<Coordinates>>,
-                response: Response<List<Coordinates>>
-            ) {
+            override fun onResponse(call: Call<List<Coordinates>>, response: Response<List<Coordinates>>) {
                 success(response.body()?.firstOrNull())
             }
 
@@ -22,17 +18,10 @@ class WeatherGeocoder(private val service: GeocoderAPI) : Geocoder {
         })
     }
 
-    override fun reverseGeocode(
-        latitude: Double,
-        longitude: Double,
-        success: (Location?) -> Unit
-    ) {
+    override fun reverseGeocode(latitude: Double, longitude: Double, success: (Location?) -> Unit) {
         val call = service.reverseGeocode(latitude, longitude)
         call.enqueue(object : Callback<List<Location>> {
-            override fun onResponse(
-                call: Call<List<Location>>,
-                response: Response<List<Location>>
-            ) {
+            override fun onResponse(call: Call<List<Location>>, response: Response<List<Location>>) {
                 success(response.body()?.firstOrNull())
             }
 

@@ -1,8 +1,8 @@
-package com.example.weatherapplication.model.history.file
+package com.example.weatherapplication.history.file
 
 import android.content.Context
-import com.example.weatherapplication.model.history.History
-import com.example.weatherapplication.model.history.HistoryRecord
+import com.example.weatherapplication.history.History
+import com.example.weatherapplication.history.HistoryRecord
 import com.google.gson.Gson
 import java.io.File
 
