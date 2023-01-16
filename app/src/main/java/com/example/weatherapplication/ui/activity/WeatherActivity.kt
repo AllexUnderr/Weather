@@ -1,7 +1,5 @@
 package com.example.weatherapplication.ui.activity
 
-import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,23 +11,20 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.weatherapplication.geocoding.AndroidGeocoder
 import com.example.weatherapplication.geocoding.Geocoder
-import com.example.weatherapplication.geocoding.WeatherGeocoder
 import com.example.weatherapplication.weather.Weather
 import com.example.weatherapplication.databinding.ActivityWeatherBinding
+import com.example.weatherapplication.geocoding.GeocoderProvider
 import com.example.weatherapplication.history.History
 import com.example.weatherapplication.history.HistoryRecord
-import com.example.weatherapplication.history.file.HistoryFile
-import com.example.weatherapplication.history.room.AppDatabase
+import com.example.weatherapplication.history.StorageProvider
 import retrofit2.create
 
 class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var history: History
-    private lateinit var androidGeocoder: AndroidGeocoder
-    private val weatherGeocoder = WeatherGeocoder(RetrofitBuilder.retrofit.create())
+    private lateinit var geocoder: Geocoder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +33,8 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        history =
-            if (intent.getBooleanExtra(STORAGE, false))
-                HistoryFile(this)
-            else
-                AppDatabase.getInstance(this).getHistoryDao()
-
-        androidGeocoder = AndroidGeocoder(this)
+        history = StorageProvider().getStorage(this)
+        geocoder = GeocoderProvider().getGeocoder(this)
 
         binding.insertButton.setOnClickListener {
             val locationName = binding.objectNameEditText.text.toString()
@@ -52,10 +42,7 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
             if (locationName.isBlank())
                 return@setOnClickListener
 
-            if (binding.geocodeSwitch.isChecked)
-                directGeocode(locationName, androidGeocoder)
-            else
-                directGeocode(locationName, weatherGeocoder)
+            directGeocode(locationName, geocoder)
         }
     }
 
@@ -72,10 +59,7 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
             setCoordinates(latitude, longitude)
             setMarker(marker)
 
-            if (binding.geocodeSwitch.isChecked)
-                reverseGeocode(latitude, longitude, androidGeocoder)
-            else
-                reverseGeocode(latitude, longitude, weatherGeocoder)
+            reverseGeocode(latitude, longitude, geocoder)
         }
     }
 
@@ -131,7 +115,7 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setRecordView(record: HistoryRecord?) {
         if (record != null) {
-            reverseGeocode(record.latitude, record.longitude, weatherGeocoder)
+            reverseGeocode(record.latitude, record.longitude, geocoder)
             setCoordinates(record.latitude, record.longitude)
             setMarker(LatLng(record.latitude, record.longitude))
         }
@@ -159,12 +143,5 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setCity(locationName: String) {
         binding.cityTextView.text = locationName
-    }
-
-    companion object {
-        private const val STORAGE = "storage"
-
-        fun createIntent(context: Context, shouldUseFileStorage: Boolean): Intent =
-            Intent(context, WeatherActivity::class.java).putExtra(STORAGE, shouldUseFileStorage)
     }
 }
