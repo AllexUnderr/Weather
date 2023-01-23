@@ -66,12 +66,15 @@ dependencies {
     def retrofit_version = "2.9.0"
     def room_version = "2.5.0"
     def fragment_version = "1.5.5"
+    def dagger_version = "2.44.2"
 
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'

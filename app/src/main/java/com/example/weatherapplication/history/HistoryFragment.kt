@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weatherapplication.databinding.FragmentHistoryBinding
 import com.example.weatherapplication.navigation.navigator
+import com.example.weatherapplication.dagger.MainApp
+import javax.inject.Inject
 
 class HistoryFragment : Fragment() {
     private lateinit var binding: FragmentHistoryBinding
-    private lateinit var viewModel: HistoryViewModel
 
-    private val onDelete: (HistoryRecyclerAdapter, HistoryRecord) -> Unit = { _, record ->
+    @Inject
+    lateinit var viewModel: HistoryViewModel
+
+    private val onDelete: (HistoryRecord) -> Unit = { record ->
         viewModel.removeRecord(record)
     }
 
@@ -28,8 +32,8 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainApp.appComponent.inject(this)
 
-        viewModel = HistoryViewModel(StorageProvider().getStorage(requireContext()))
 
         val historyAdapter = HistoryRecyclerAdapter(onDelete, onSee)
         binding.historyRecyclerView.adapter = historyAdapter

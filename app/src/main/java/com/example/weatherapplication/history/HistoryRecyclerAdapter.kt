@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapplication.databinding.RecyclerviewItemBinding
 
 class HistoryRecyclerAdapter(
-    private val onDelete: (HistoryRecyclerAdapter, HistoryRecord) -> Unit,
+    private val onDelete: (HistoryRecord) -> Unit,
     private val onSee: (HistoryRecord) -> Unit,
 ) :
     ListAdapter<HistoryRecord, HistoryRecyclerAdapter.ViewHolder>(HistoryItemCallback()) {
@@ -31,11 +32,19 @@ class HistoryRecyclerAdapter(
         holder.longitudeTextView.text = record.longitude.toString()
 
         holder.deleteButton.setOnClickListener {
-            onDelete(this, record)
+            onDelete(record)
         }
 
         holder.seeButton.setOnClickListener {
             onSee(record)
         }
+    }
+
+    private class HistoryItemCallback : DiffUtil.ItemCallback<HistoryRecord>() {
+        override fun areItemsTheSame(oldItem: HistoryRecord, newItem: HistoryRecord) =
+            oldItem.locationName == newItem.locationName
+
+        override fun areContentsTheSame(oldItem: HistoryRecord, newItem: HistoryRecord) =
+            oldItem == newItem
     }
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weatherapplication.R
+import com.example.weatherapplication.dagger.MainApp
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -14,15 +15,16 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.weatherapplication.databinding.FragmentWeatherBinding
-import com.example.weatherapplication.geocoding.GeocoderProvider
 import com.example.weatherapplication.history.HistoryRecord
-import com.example.weatherapplication.history.StorageProvider
 import com.example.weatherapplication.weather.model.GeographicalObject
+import javax.inject.Inject
 
 class WeatherFragment : Fragment(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
     private lateinit var binding: FragmentWeatherBinding
-    private lateinit var viewModel: WeatherViewModel
+
+    @Inject
+    lateinit var viewModel: WeatherViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentWeatherBinding.inflate(inflater, container, false)
@@ -32,14 +34,11 @@ class WeatherFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainApp.appComponent.inject(this)
+
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        viewModel = WeatherViewModel(
-            GeocoderProvider().getGeocoder(requireContext()),
-            StorageProvider().getStorage(requireContext())
-        )
 
         viewModel.geographicObject.observe(viewLifecycleOwner) {
             if (it == null) {
@@ -119,7 +118,7 @@ class WeatherFragment : Fragment(), OnMapReadyCallback {
         else
             arguments?.getParcelable(HistoryRecord::class.simpleName, HistoryRecord::class.java)
 
-    private fun isDeprecated() = Build.VERSION.SDK_INT < 33
+    private fun isDeprecated() = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
 
     companion object {
         fun newInstance(record: HistoryRecord): WeatherFragment {
