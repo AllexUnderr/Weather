@@ -1,9 +1,12 @@
 package com.example.weatherapplication.history
 
+import io.reactivex.Completable
+import io.reactivex.Single
+
 interface History {
-    fun addRecord(record: HistoryRecord)
+    fun addRecord(record: HistoryRecord): Completable
 
-    fun getRecords(): List<HistoryRecord>
+    fun getRecords(): Single<List<HistoryRecord>>
 
-    fun removeRecord(record: HistoryRecord)
+    fun removeRecord(record: HistoryRecord): Completable
 }

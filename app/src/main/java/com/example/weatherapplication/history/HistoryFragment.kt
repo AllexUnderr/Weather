@@ -48,4 +48,9 @@ class HistoryFragment : Fragment() {
 
         viewModel.init()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.disposeAll()
+    }
 }

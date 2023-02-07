@@ -53,19 +53,21 @@ class WeatherFragment : Fragment(), OnMapReadyCallback {
 
         binding.insertButton.setOnClickListener {
             val locationName = binding.objectNameEditText.text.toString()
-            if (locationName.isBlank())
-                return@setOnClickListener
-
-            viewModel.directGeocode(locationName)
+            if (locationName.isNotBlank())
+                viewModel.directGeocode(locationName)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.disposeAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
         val record = getRecordFromArguments()
-        if (record != null)
-            viewModel.reverseGeocode(record.latitude, record.longitude)
+        record?.run { viewModel.reverseGeocode(latitude, longitude) }
 
         map.setOnMapClickListener { marker ->
             val latitude = marker.latitude

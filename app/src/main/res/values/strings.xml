@@ -14,7 +14,7 @@
     <string name="geocode_variant">Geocode variant</string>
     <string name="object_name">Object name</string>
     <string name="history">history</string>
-    <string name="your_history">Your history:</string>
+    <string name="your_history">Your history</string>
     <string name="delete_button">delete button</string>
     <string name="view_button">view button</string>
     <string name="switch_storage">database/text file</string>

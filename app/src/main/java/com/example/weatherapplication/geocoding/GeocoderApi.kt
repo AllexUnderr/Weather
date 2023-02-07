@@ -3,7 +3,7 @@ package com.example.weatherapplication.geocoding
 import com.example.weatherapplication.service.RetrofitBuilder
 import com.example.weatherapplication.geocoding.model.Coordinates
 import com.example.weatherapplication.geocoding.model.Location
-import retrofit2.Call
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,12 +12,12 @@ interface GeocoderApi {
     fun directGeocode(
         @Query("q") objectName: String,
         @Query("appid") APIKey: String = RetrofitBuilder.API_KEY,
-    ): Call<List<Coordinates>>
+    ): Single<List<Coordinates>>
 
     @GET("geo/1.0/reverse")
     fun reverseGeocode(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("appid") APIKey: String = RetrofitBuilder.API_KEY,
-    ): Call<List<Location>>
+    ): Single<List<Location>>
 }

@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".weather.WeatherFragment">
 
     <TextView
         android:id="@+id/cityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:text="@string/object_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/object_name" />
 
     <TextView
         android:id="@+id/objectNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/object_name_text"
-        app:layout_constraintEnd_toEndOf="@id/cityTextView"
-        app:layout_constraintStart_toStartOf="@id/cityTextView"
-        app:layout_constraintTop_toBottomOf="@id/cityTextView" />
+        android:layout_gravity="center_horizontal"
+        android:text="@string/object_name_text" />
 
     <EditText
         android:id="@+id/objectNameEditText"
         style="@style/CustomEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:autofillHints="no"
         android:backgroundTint="@color/black"
         android:hint="@string/city_example"
@@ -37,21 +35,16 @@
         android:padding="10dp"
         android:textAlignment="center"
         android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="@id/objectNameTextView"
-        app:layout_constraintStart_toStartOf="@id/objectNameTextView"
-        app:layout_constraintTop_toBottomOf="@id/objectNameTextView"
         tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/insertButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/button_background_color"
         android:text="@string/button_insert"
         android:textColor="@color/button_text_color"
-        app:layout_constraintEnd_toEndOf="@id/objectNameEditText"
-        app:layout_constraintStart_toStartOf="@id/objectNameEditText"
-        app:layout_constraintTop_toBottomOf="@id/objectNameEditText"
         app:strokeColor="@color/black"
         app:strokeWidth="1dp" />
 
@@ -60,29 +53,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/latitude"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/insertButton" />
+        android:text="@string/latitude" />
 
     <TextView
         android:id="@+id/longitudeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/longitude"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/latitudeTextView" />
+        android:text="@string/longitude" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/longitudeTextView"
+        android:layout_height="match_parent"
         tools:context=".MapsActivity"
         tools:layout="@layout/support_simple_spinner_dropdown_item" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
