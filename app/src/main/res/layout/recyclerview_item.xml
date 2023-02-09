@@ -21,10 +21,10 @@
             android:textSize="20sp" />
 
         <ImageButton
-            android:layout_marginStart="5dp"
             android:id="@+id/deleteButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginStart="5dp"
             android:adjustViewBounds="true"
             android:background="@color/white"
             android:contentDescription="@string/delete_button"
@@ -45,15 +45,14 @@
             android:textSize="20sp" />
 
         <ImageButton
-            android:layout_marginStart="5dp"
             android:id="@+id/viewButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginStart="5dp"
             android:adjustViewBounds="true"
             android:background="@color/white"
             android:contentDescription="@string/view_button"
             android:scaleType="fitCenter"
             android:src="@drawable/view_button" />
     </LinearLayout>
-
 </LinearLayout>
